@@ -24,5 +24,3 @@
 - React Icons
 
 ---
-
-## 📂 Project Structure
