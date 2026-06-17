@@ -18,10 +18,9 @@ import {
     FiAlertCircle,
     FiCheckCircle,
     FiInfo,
-    FiSettings,
     FiChevronRight,
-    FiLayers,
-    FiBox
+    FiBox,
+    FiMessageCircle
 } from 'react-icons/fi';
 
 export default function Sidebar() {
@@ -92,6 +91,12 @@ export default function Sidebar() {
                     pattern: /^\/admin\/uplifts\/items/
                 }
             ]
+        },
+        {
+            name: 'Messages',
+            href: "/admin/messages",
+            icon: FiMessageCircle,
+            pattern: /^\/admin\/sections/
         },
         {
             name: 'Users',

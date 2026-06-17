@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Wifi, Coffee, Users, Building, Laptop, Globe, Lightbulb } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -41,14 +41,32 @@ export default function Qoworking({ data = {} }) {
     show: { opacity: 1, y: 0 },
   };
 
-  const iconMap = {
-    wifi: <Wifi size={24} />,
-    coffee: <Coffee size={24} />,
-    users: <Users size={24} />,
-    building: <Building size={24} />,
-    laptop: <Laptop size={24} />,
-    globe: <Globe size={24} />,
-    lightbulb: <Lightbulb size={24} />
+  // Universal Lucide icon renderer
+  const renderIcon = (iconName, size = 24, className = "text-cyan-600") => {
+    if (!iconName) {
+      const DefaultIcon = LucideIcons.HelpCircle;
+      return React.createElement(DefaultIcon, { size, className });
+    }
+
+    // Try exact match
+    let IconComponent = LucideIcons[iconName];
+
+    // If not found, try case-insensitive match
+    if (!IconComponent) {
+      const matchedKey = Object.keys(LucideIcons).find(
+        key => key.toLowerCase() === iconName.toLowerCase()
+      );
+      if (matchedKey) {
+        IconComponent = LucideIcons[matchedKey];
+      }
+    }
+
+    // If still not found, use HelpCircle as fallback
+    if (!IconComponent) {
+      IconComponent = LucideIcons.HelpCircle;
+    }
+
+    return React.createElement(IconComponent, { size, className });
   };
 
   return (
@@ -92,8 +110,8 @@ export default function Qoworking({ data = {} }) {
                   viewport={{ once: true }}
                   className="flex items-center gap-4 text-gray-700"
                 >
-                  <div className="text-cyan-600">
-                    {iconMap[f?.icon?.toLowerCase()] || <Wifi size={24} />}
+                  <div className="text-cyan-600 flex-shrink-0">
+                    {renderIcon(f?.icon, 24, "text-cyan-600")}
                   </div>
                   <span className="font-medium">{f?.text}</span>
                 </motion.div>
